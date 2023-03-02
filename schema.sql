@@ -1,0 +1,28 @@
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    username TEXT NOT NULL,
+    password TEXT NOT NULL
+);
+
+DROP TABLE IF EXISTS products;
+CREATE TABLE products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    name TEXT NOT NULL,
+    store TEXT NOT NULL,
+    image_url TEXT NOT NULL,
+    rating FLOAT NOT NULL
+);
+
+DROP TABLE IF EXISTS favorites;
+CREATE TABLE favorites (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    product_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(id),
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    CONSTRAINT unique_product_user UNIQUE(product_id, user_id)
+);
